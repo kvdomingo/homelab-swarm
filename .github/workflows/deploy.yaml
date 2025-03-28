@@ -1,0 +1,22 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+            
+concurrency:
+  cancel-in-progress: true
+  group: deploy
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    name: Deploy to swarm
+    steps:
+      - uses: actions/checkout@v4
+        name: Checkout
+
+      - name: Deploy core
+        working-directory: core
+        run: docker stack deploy --compose-file docker-compose.yml --prune --detach core

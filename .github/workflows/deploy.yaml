@@ -19,4 +19,7 @@ jobs:
 
       - name: Deploy core
         working-directory: core
+        env:
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          CF_API_EMAIL: ${{ secrets.CF_API_EMAIL }}
         run: docker stack deploy --compose-file docker-compose.yml --prune --detach core

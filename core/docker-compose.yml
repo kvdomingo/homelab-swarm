@@ -42,7 +42,7 @@ services:
       - traefik
     labels:
       traefik.enable: 'true'
-      traefik.http.routers.traefik.rule: Host(`traefik.lab2.kvd.studio`)
+      traefik.http.routers.traefik.rule: Host(`traefik.dok.kvd.studio`)
       traefik.http.routers.traefik.entrypoints: http
       traefik.http.routers.traefik.service: api@internal
       traefik.http.services.traefik.loadbalancer.server.port: '8080'
@@ -56,7 +56,7 @@ services:
       - traefik
     labels:
       traefik.enable: 'true'
-      traefik.http.routers.portainer.rule: Host(`portainer.lab2.kvd.studio`)
+      traefik.http.routers.portainer.rule: Host(`portainer.dok.kvd.studio`)
       traefik.http.routers.portainer.entrypoints: http
       traefik.http.routers.portainer.service: portainer
       traefik.http.services.portainer.loadbalancer.server.port: '9000'

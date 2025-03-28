@@ -7,14 +7,7 @@ networks:
     attachable: true
 
 volumes:
-  portainer-data:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=10.10.10.100,rw,nfsvers=4
-      device: ":/mnt/big-chonk/srv-lab"
-  acme-data:
-    driver: local
+  nfs:
     driver_opts:
       type: nfs
       o: addr=10.10.10.100,rw,nfsvers=4
@@ -30,10 +23,14 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - /var/log/traefik:/var/log
       - ./traefik.yml:/etc/traefik/traefik.yml
       - /var/run/docker.sock:/var/run/docker.sock:ro
-      - acme-data:/acme.json
+      - type: volume
+        source: nfs
+        target: /acme.json
+        volume:
+          nocopy: true
+          subpath: core_acme-data
     deploy:
       placement:
         constraints:
@@ -55,7 +52,12 @@ services:
     image: portainer/portainer-ce:2.24.1
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - portainer-data:/data
+      - type: volume
+        source: nfs
+        target: /data
+        volume:
+          nocopy: true
+          subpath: core_portainer-data
     networks:
       - traefik
     labels:

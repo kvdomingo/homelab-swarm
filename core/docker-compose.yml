@@ -3,7 +3,7 @@ networks:
     driver: overlay
     ipam:
       config:
-        - subnet: 10.43.0.0/22
+        - subnet: 10.43.0.0/24
     attachable: true
 
 volumes:
@@ -15,7 +15,7 @@ volumes:
 
 services:
   traefik:
-    image: traefik:v3.3
+    image: traefik:v3
     environment:
       CF_API_EMAIL: ${CF_API_EMAIL}
       CF_API_KEY: ${CF_API_KEY}
@@ -39,17 +39,17 @@ services:
       - traefik
     labels:
       traefik.enable: 'true'
-      traefik.http.routers.traefik.rule: Host(`traefik.dok.kvd.studio`)
+      traefik.http.routers.traefik.rule: Host(`traefik.dev.kvd.studio`)
       traefik.http.routers.traefik.entrypoints: https
       traefik.http.routers.traefik.tls: 'true'
       traefik.http.routers.traefik.tls.certresolver: cloudflare
-      traefik.http.routers.traefik.tls.domains[0].main: dok.kvd.studio
-      traefik.http.routers.traefik.tls.domains[0].sans: '*.dok.kvd.studio'
+      traefik.http.routers.traefik.tls.domains[0].main: dev.kvd.studio
+      traefik.http.routers.traefik.tls.domains[0].sans: '*.dev.kvd.studio'
       traefik.http.routers.traefik.service: api@internal
-      traefik.http.services.traefik.loadbalancer.server.port: '8080'
+      traefik.http.services.traefik.loadbalancer.server.port: 8080
 
   portainer:
-    image: portainer/portainer-ce:2.24.1
+    image: portainer/portainer-ce:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - type: volume
@@ -62,8 +62,8 @@ services:
       - traefik
     labels:
       traefik.enable: 'true'
-      traefik.http.routers.portainer.rule: Host(`portainer.dok.kvd.studio`)
+      traefik.http.routers.portainer.rule: Host(`portainer.dev.kvd.studio`)
       traefik.http.routers.portainer.entrypoints: https
       traefik.http.routers.portainer.tls: 'true'
       traefik.http.routers.portainer.service: portainer
-      traefik.http.services.portainer.loadbalancer.server.port: '9000'
+      traefik.http.services.portainer.loadbalancer.server.port: 9000

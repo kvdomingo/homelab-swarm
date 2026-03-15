@@ -1,0 +1,9 @@
+{
+  "[yaml][github-actions-workflow]": {
+    "editor.indentSize": 2,
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.formatOnSave": true,
+  },
+  "prettier.enable": false
+}

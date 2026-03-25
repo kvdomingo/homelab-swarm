@@ -4,11 +4,12 @@ on:
   push:
     branches: [main]
     paths:
-      - github/**
+      - .github/**
       - docker-compose.yml
       - stacks.yaml
       - config.yaml
       - repos.yaml
+  workflow_dispatch:
 
 concurrency:
   group: dev

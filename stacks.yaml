@@ -1,4 +1,4 @@
-nginx:
+core:
   repo: lab
   branch: main
   compose_file: core/docker-compose.yml

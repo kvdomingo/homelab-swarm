@@ -38,10 +38,10 @@ services:
         constraints:
           - node.role == manager
       labels:
-        traefik.enable: true
+        traefik.enable: "true"
         traefik.http.routers.traefik.rule: Host(`traefik.swarm.kvd.studio`)
         traefik.http.routers.traefik.entrypoints: https
-        traefik.http.routers.traefik.tls: true
+        traefik.http.routers.traefik.tls: "true"
         traefik.http.routers.traefik.tls.certresolver: cloudflare
         traefik.http.routers.traefik.tls.domains[0].main: swarm.kvd.studio
         traefik.http.routers.traefik.tls.domains[0].sans: "*.swarm.kvd.studio"

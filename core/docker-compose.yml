@@ -1,0 +1,48 @@
+networks:
+  traefik:
+    driver: overlay
+    ipam:
+      config:
+        - subnet: 10.43.0.0/24
+    attachable: true
+
+volumes:
+  acme:
+    driver: local
+
+services:
+  traefik:
+    image: traefik:v3
+    networks:
+      - traefik
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+      - target: 443
+        published: 443
+        protocol: tcp
+        mode: host
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /var/log/traefik:/var/log
+      - ./traefik-dynamic.yml:/dynamic/config.yml:ro
+      - acme:/etc/traefik/acme
+    command: []
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        traefik.enable: true
+        traefik.http.routers.traefik.rule: Host(`traefik.swarm.kvd.studio`)
+        traefik.http.routers.traefik.entrypoints: https
+        traefik.http.routers.traefik.tls: true
+        traefik.http.routers.traefik.tls.certresolver: cloudflare
+        traefik.http.routers.traefik.tls.domains[0].main: swarm.kvd.studio
+        traefik.http.routers.traefik.tls.domains[0].sans: "*.swarm.kvd.studio"
+        traefik.http.routers.traefik.service: api@internal

@@ -1,0 +1,19 @@
+# SwarmCD configuration file reference
+
+# The interval in seconds that SwarmCD
+# waits everytime before pulling
+update_interval: 120
+
+# The path where SwarmCD will checkout repos
+repos_path: repos/
+
+# Automatically detect secrets to decrypt with SOPS
+sops_secrets_discovery: false
+
+# Automatically rotate configs and secrets
+# when the change. Adds a hash to config
+# and secret names
+auto_rotate: false
+
+# The WEB UI address
+address: 0.0.0.0:8080

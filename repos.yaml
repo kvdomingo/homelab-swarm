@@ -1,2 +1,2 @@
-swarm-cd-example:
-  url: https://github.com/m-adawi/swarm-cd-example.git
+lab:
+  url: https://github.com/kvdomingo/homelab-swarm.git

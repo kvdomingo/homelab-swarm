@@ -3,6 +3,9 @@ name: Deploy
 on:
   push:
     branches: [main]
+    paths:
+      - github/**
+      - docker-compose.yml
 
 concurrency:
   group: dev

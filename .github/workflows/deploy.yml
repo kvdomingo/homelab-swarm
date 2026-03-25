@@ -6,6 +6,9 @@ on:
     paths:
       - github/**
       - docker-compose.yml
+      - stacks.yaml
+      - config.yaml
+      - repos.yaml
 
 concurrency:
   group: dev
